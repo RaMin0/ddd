@@ -1,0 +1,48 @@
+openapi: '3.0.3'
+
+info:
+  title: Hello, World!
+  version: '1.0'
+
+servers:
+- url: http://localhost:{port}/{version}
+  variables:
+    port:
+      default: '8000'
+    version:
+      default: v1
+      enum:
+      - v1
+
+paths:
+  /hello:
+    get:
+      tags: ['Hello']
+      parameters:
+      - $ref: '#/components/parameters/HelloName'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HelloResponse'
+
+components:
+  parameters:
+    HelloName:
+      name: name
+      in: query
+      schema:
+        type: string
+      required: true
+      example: Ramy
+  schemas:
+    HelloResponse:
+      required:
+      - hello
+      type: object
+      properties:
+        hello:
+          type: string
+          example: World
